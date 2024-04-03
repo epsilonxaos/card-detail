@@ -21,16 +21,16 @@ export default function CardDetail() {
 
 	return (
 		<CardDetailContext.Provider value={{state, dispatch}}>
-			<div className='flex flex-col gap-2 w-full max-w-[500px]'>
+			<div className='flex flex-col gap-2 w-full max-w-[500px] mx-auto py-8'>
 				<div className='w-full mx-auto'>
-					<div className="relative pb-16">
-						<div className='absolute w-[80%] bottom-0 left-0 fill-slate-600'>
+					<div className="relative pb-20">
+						<div className='absolute w-[80%] bottom-0 left-0 fill-indigo-800'>
 							<div className='absolute top-7 right-10'>
 								{state?.cardIcon}
 							</div>
 							<CardFront />
 						</div>
-						<div className='back w-[80%] ml-auto mr-0 fill-slate-700'>
+						<div className='back w-[80%] ml-auto mr-0 fill-blue-400'>
 							<CardBack />
 						</div>
 					</div>
