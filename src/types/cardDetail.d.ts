@@ -1,4 +1,5 @@
 import { Dispatch } from "react"
+// import {UseForm}
 
 type TCardDetailContext = {
     state: TCardDetail
@@ -29,4 +30,16 @@ interface IMaskedInput {
 	dispatch?: () => {},
 	onChange?: () => {},
 	onAccept?: () => {},
+}
+
+interface IInput {
+    name: string
+    label?: string
+    type?: string
+    value?: any
+    register?: any //UseFormRegister<FieldValues>
+    rules: any
+    validateError?: boolean
+    validateErrorMessage?: string
+    onChange?: () => {},
 }
