@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import MaskedInput from "./MasketInput"
+import Input from "./Input"
 import CardDetailContext from "../context/CardDetailContext"
 
 import defaultMaskCard from '../assets/defaultMaskCard.json'
@@ -20,7 +20,7 @@ export default function Form() {
     onSubmit={handleSubmit}
     className='md:pl-8 pt-6 pb-8 mb-4'>
     <div className='mb-4 relative'>
-        <MaskedInput
+        <Input.Masked
             onAccept={(value, mask) => {
                 dispatch({cardNumber: value})
 
@@ -83,19 +83,10 @@ export default function Form() {
         </div>
     </div>
     <div className='mb-4'>
-        <label
-            className='block mb-2 text-sm font-medium '
-            htmlFor='cardOwner'>
-            TITULAR
-        </label>
-        <input
-            onChange={ev => {
-                dispatch({ cardOwner: ev.target.value})
-            }}
+        <Input
+            label="TITULAR"
+            onChange={ev => dispatch({ cardOwner: ev.target.value}) }
             value={state.cardOwner}
-            className='bg-transparent border-2 border-verdigris  text-sm block w-full p-2.5 placeholder:'
-            id='cardOwner'
-            type='text'
         />
     </div>
     <div>
@@ -103,7 +94,7 @@ export default function Form() {
     </div>
     <div className='mb-4 flex'>
         <div className='mr-2'>
-            <MaskedInput
+            <Input.Masked
                 onAccept={value => {
                     dispatch({expMonth: value})
                 }}
@@ -120,7 +111,7 @@ export default function Form() {
             />
         </div>
         <div className='mr-2'>
-            <MaskedInput
+            <Input.Masked
                 onAccept={value => {
                     dispatch({expYear: value})
                 }}
@@ -135,7 +126,7 @@ export default function Form() {
             />
         </div>
         <div className='mb-6'>
-            <MaskedInput
+            <Input.Masked
                 onAccept={value => {
                     dispatch({cvv: value})
                 }}
