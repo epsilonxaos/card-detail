@@ -1,4 +1,4 @@
-# Card detail React
+# Credit Card Payment Form React
 
 This project using React with Tailwind, additional the form implement validations on React Form Hook
 
