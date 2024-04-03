@@ -1,134 +1,70 @@
+import { useContext } from "react"
+import MaskedInput from "./MasketInput"
+import CardDetailContext from "../context/CardDetailContext"
+
+import defaultMaskCard from '../assets/defaultMaskCard.json'
+
+import {FaCcAmex, FaCcMastercard, FaCcVisa} from 'react-icons/fa'
+
 export default function Form() {
+
+    const {state, dispatch} = useContext(CardDetailContext)
+
+    const handleSubmit = e => {
+		e.preventDefault()
+
+		console.log("Enviado")
+	}
+
     return <form
     onSubmit={handleSubmit}
     className='md:pl-8 pt-6 pb-8 mb-4'>
     <div className='mb-4 relative'>
         <MaskedInput
-            onChange={(value, mask) => {
-                setCardNumber(value)
-
-                let ccicon = document.getElementById('ccicon')
-                let ccsingle = document.getElementById('ccsingle')
+            onAccept={(value, mask) => {
+                dispatch({cardNumber: value})
 
                 switch (mask.masked.currentMask.cardtype) {
                     case 'american express':
-                        ccicon.innerHTML = icons.amex
-                        ccsingle.innerHTML = iconsSingle.amex_single
-                        swapColor('green')
+                        dispatch({
+                            inputIcon: FaCcAmex({size: "1.5em", color: "#079043"}),
+                            cardIcon: FaCcAmex({size: "3em", color: "#079043"}),
+                            cardColor: "green"
+                        })
                         break
                     case 'visa':
-                        ccicon.innerHTML = icons.visa
-                        ccsingle.innerHTML = iconsSingle.visa_single
-                        swapColor('lime')
+                        dispatch({
+                            inputIcon: FaCcVisa({size: "1.5em", color: "#074790"}),
+                            cardIcon: FaCcVisa({size: "3em", color: "#074790"}),
+                            cardColor: "blue"
+                        })
                         break
-                    case 'diners':
-                        ccicon.innerHTML = icons.diners
-                        ccsingle.innerHTML = iconsSingle.diners_single
-                        swapColor('orange')
-                        break
-                    case 'discover':
-                        ccicon.innerHTML = icons.discover
-                        ccsingle.innerHTML = iconsSingle.discover_single
-                        swapColor('purple')
-                        break
-                    case 'jcb' || 'jcb15':
-                        ccicon.innerHTML = icons.jcb
-                        ccsingle.innerHTML = iconsSingle.jcb_single
-                        swapColor('red')
-                        break
-                    case 'maestro':
-                        ccicon.innerHTML = icons.maestro
-                        ccsingle.innerHTML = iconsSingle.maestro_single
-                        swapColor('yellow')
-                        break
+                    // case 'diners':
+                    //     ccicon.innerHTML = icons.diners
+                    //     ccsingle.innerHTML = iconsSingle.diners_single
+                    //     swapColor('orange')
+                    //     break
                     case 'mastercard':
-                        ccicon.innerHTML = icons.mastercard
-                        ccsingle.innerHTML = iconsSingle.mastercard_single
-                        swapColor('lightblue')
+                        dispatch({
+                            inputIcon: FaCcMastercard({size: "1.5em", color: "#F6A800"}),
+                            cardIcon: FaCcMastercard({size: "3em", color: "#F6A800"}),
+                            cardColor: "orange"
+                        })
 
                         break
-                    case 'unionpay':
-                        ccicon.innerHTML = icons.unionpay
-                        ccsingle.innerHTML = iconsSingle.unionpay_single
-                        swapColor('cyan')
-                        break
                     default:
-                        ccicon.innerHTML = ''
-                        ccsingle.innerHTML = ''
-                        swapColor('grey')
+                        dispatch({
+                            inputIcon: null,
+                            cardIcon: null,
+                            cardColor: "grey"
+                        })
                         break
                 }
             }}
-            focusFn={() => setFlipped(false)}
-            value={cardNumber}
-            titulo={'NÚMERO DE TARJETA'}
-            forInput={'cardNumber'}
-            mask={[
-                {
-                    mask: '0000 000000 00000',
-                    regex: '^3[47]\\d{0,13}',
-                    cardtype: 'american express',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^(?:6011|65\\d{0,2}|64[4-9]\\d?)\\d{0,12}',
-                    cardtype: 'discover',
-                },
-                {
-                    mask: '0000 000000 0000',
-                    regex: '^3(?:0([0-5]|9)|[689]\\d?)\\d{0,11}',
-                    cardtype: 'diners',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^(5[1-5]\\d{0,2}|22[2-9]\\d{0,1}|2[3-7]\\d{0,2})\\d{0,12}',
-                    cardtype: 'mastercard',
-                },
-                // {
-                //     mask: '0000-0000-0000-0000',
-                //     regex: '^(5019|4175|4571)\\d{0,12}',
-                //     cardtype: 'dankort'
-                // },
-                // {
-                //     mask: '0000-0000-0000-0000',
-                //     regex: '^63[7-9]\\d{0,13}',
-                //     cardtype: 'instapayment'
-                // },
-                {
-                    mask: '0000 000000 00000',
-                    regex: '^(?:2131|1800)\\d{0,11}',
-                    cardtype: 'jcb15',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^(?:35\\d{0,2})\\d{0,12}',
-                    cardtype: 'jcb',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^(?:5[0678]\\d{0,2}|6304|67\\d{0,2})\\d{0,12}',
-                    cardtype: 'maestro',
-                },
-                // {
-                //     mask: '0000-0000-0000-0000',
-                //     regex: '^220[0-4]\\d{0,12}',
-                //     cardtype: 'mir'
-                // },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^4\\d{0,15}',
-                    cardtype: 'visa',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    regex: '^62\\d{0,14}',
-                    cardtype: 'unionpay',
-                },
-                {
-                    mask: '0000 0000 0000 0000',
-                    cardtype: 'Unknown',
-                },
-            ]}
+            value={state.cardNumber}
+            label={'NÚMERO DE TARJETA'}
+            name={'cardNumber'}
+            mask={defaultMaskCard}
             dispatch={(appended, dynamicMasked) => {
                 var number = (dynamicMasked.value + appended).replace(/\D/g, '')
 
@@ -139,64 +75,57 @@ export default function Form() {
                     }
                 }
             }}
-            placeholder={'1234 5678 9012 3456'}
+            placeholder={'0000 0000 0000 0000'}
         />
-        <svg
-            id='ccicon'
-            className='ccicon !top-auto !bottom-1 right-2 !w-10'
-            width='750'
-            height='471'
-            viewBox='0 0 750 471'
-            version='1.1'></svg>
+
+        <div className="absolute top-auto z-[1] bottom-1 right-2 w-10">
+            {state?.icon}
+        </div>
     </div>
     <div className='mb-4'>
         <label
-            className='block mb-2 text-sm font-medium text-white'
+            className='block mb-2 text-sm font-medium '
             htmlFor='cardOwner'>
             TITULAR
         </label>
         <input
-            onFocus={() => setFlipped(false)}
             onChange={ev => {
-                setCardOwner(ev.target.value)
+                dispatch({ cardOwner: ev.target.value})
             }}
-            value={cardOwner}
-            className='bg-transparent border-2 border-verdigris text-white text-sm block w-full p-2.5 placeholder:text-white'
+            value={state.cardOwner}
+            className='bg-transparent border-2 border-verdigris  text-sm block w-full p-2.5 placeholder:'
             id='cardOwner'
             type='text'
         />
     </div>
     <div>
-        <p className='text-white mb-2'>EXPIRACIÓN</p>
+        <p className=' mb-2'>EXPIRACIÓN</p>
     </div>
     <div className='mb-4 flex'>
         <div className='mr-2'>
             <MaskedInput
-                onChange={value => {
-                    setExpirationMonth(value)
+                onAccept={value => {
+                    dispatch({expMonth: value})
                 }}
-                focusFn={() => setFlipped(false)}
-                value={expirationMonth}
-                forInput={'expirationMonth'}
+                value={state.expMonth}
+                name={'expirationMonth'}
                 mask={[
                     {
                         mask: '00',
                     },
                 ]}
                 placeholder={'MES'}
-                normalizeZeros={true}
                 min={1}
                 max={12}
             />
         </div>
         <div className='mr-2'>
             <MaskedInput
-                onChange={value => {
-                    setExpirationYear(value)
+                onAccept={value => {
+                    dispatch({expYear: value})
                 }}
-                focusFn={() => setFlipped(false)}
-                value={expirationYear}
-                forInput={'expirationYear'}
+                value={state.expYear}
+                name={'expirationYear'}
                 mask={[
                     {
                         mask: '00',
@@ -207,30 +136,17 @@ export default function Form() {
         </div>
         <div className='mb-6'>
             <MaskedInput
-                onChange={value => {
-                    setCvv(value)
+                onAccept={value => {
+                    dispatch({cvv: value})
                 }}
-                focusFn={() => setFlipped(true)}
-                value={cvv}
+                value={state.cvv}
                 placeholder={'CVV'}
-                forInput={'cvv'}
+                name={'cvv'}
                 mask={Number}
                 max={9999}
             />
         </div>
     </div>
-    <div className='flex items-center justify-end'>
-        <button
-            type='button'
-            onClick={() => dispatch({ pasoActual: 'reservacion' })}
-            className='px-8 py-2 mb-3 mr-3 inline text-sm mt-2 max-w-max bg-white text-black rounded-md'>
-            Regresar
-        </button>
-        <button
-            type='submit'
-            className='px-8 py-2 mb-3 inline text-sm mt-2 max-w-max bg-verdigris text-black rounded-md'>
-            Finalizar
-        </button>
-    </div>
+    
 </form>
 }
