@@ -4,4 +4,8 @@ export const defaultParamsCardDetails = {
     "expMonth": "",
     "expYear": "",
     "cvv": "",
+
+    "icon": null,
+    "iconSingle": null,
+    "cardColor": "grey"
 }
