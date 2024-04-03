@@ -1,4 +1,10 @@
-export default function CardBack({ cvv, name }) {
+import { useContext } from "react"
+import CardDetailContext from "../../context/CardDetailContext"
+
+export default function CardBack() {
+
+	const {state} = useContext(CardDetailContext)
+
 	return (
 		<svg
 			version='1.1'
@@ -60,7 +66,7 @@ export default function CardBack({ cvv, name }) {
 					transform='matrix(1 0 0 1 621.999 227.2734)'
 					id='svgsecurity'
 					className='st6 st7'>
-					{(cvv ||= '--')}
+					{(state.cvv || '--')}
 				</text>
 				<g className='st8'>
 					<text
@@ -87,7 +93,7 @@ export default function CardBack({ cvv, name }) {
 					transform='matrix(1 0 0 1 59.5073 228.6099)'
 					id='svgnameback'
 					className='st12 st13'>
-					{(name ||= '--')}
+					{(state.cardOwner || '--')}
 				</text>
 			</g>
 		</svg>

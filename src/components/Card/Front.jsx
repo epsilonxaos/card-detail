@@ -1,4 +1,10 @@
-export default function CardFront({ number, name, month, year }) {
+import { useContext } from "react"
+import CardDetailContext from "../../context/CardDetailContext"
+import { truncateText } from "../../utils/helpers"
+
+export default function CardFront() {
+	const {state} = useContext(CardDetailContext)
+
 	return (
 		<svg
 			id='cardfront'
@@ -12,13 +18,13 @@ export default function CardFront({ number, name, month, year }) {
 						<g id='amex_1_'>
 							<path
 								id='Rectangle-1_1_'
-								className='lightcolor grey'
+								className={'lightcolor '+ state.cardColor}
 								d='M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40 C0,17.9,17.9,0,40,0z'
 							/>
 						</g>
 					</g>
 					<path
-						className='darkcolor greydark'
+						className={'darkcolor ' + state.cardColor}
 						d='M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z'
 					/>
 				</g>
@@ -26,13 +32,13 @@ export default function CardFront({ number, name, month, year }) {
 					transform='matrix(1 0 0 1 60.106 295.0121)'
 					id='svgnumber'
 					className='st2 st3 st4'>
-					{(number ||= '---- ---- ---- ----')}
+					{(state?.cardNumber || '---- ---- ---- ----')}
 				</text>
 				<text
 					transform='matrix(1 0 0 1 54.1064 428.1723)'
 					id='svgname'
 					className='st2 st5 st6'>
-					{(name ||= '--')}
+						{(truncateText(state?.cardOwner, 20) || '--')}
 				</text>
 				<text
 					transform='matrix(1 0 0 1 54.1074 389.8793)'
@@ -54,7 +60,7 @@ export default function CardFront({ number, name, month, year }) {
 						transform='matrix(1 0 0 1 574.4219 433.8095)'
 						id='svgexpire'
 						className='st2 st5 st9'>
-						{month ? month : '--'}/{year ? year : '--'}
+						{state.expMonth || '--'}/{state.expYear || '--'}
 					</text>
 					<text
 						transform='matrix(1 0 0 1 479.3848 417.0097)'
